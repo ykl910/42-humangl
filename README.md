@@ -14,6 +14,6 @@ A small Java/OpenGL 4.1 skeletal-animation project for 42. The fixed-function ma
 make run
 ```
 
-Controls: `W`/`S` change animation speed, `SPACE` toggles jumping, `R` toggles a torso rotation, `ESC` quits. The humanoid is animated continuously; speed zero leaves it standing.
+Controls: `A`/`S`/`D`/`F` set slow/normal/fast/faster animation speed, `SPACE` triggers one jump when standing still (jump input is ignored while walking), `R` triggers a torso spin in one direction and `T` in the opposite direction, `E` pauses/resumes, `ESC` quits. The humanoid is animated continuously; speed zero leaves it standing.
 
 The project intentionally keeps the scene small: every body-part method draws exactly one unit cube at the origin of its current matrix. Parent transforms are pushed and popped around the hierarchy, so changing a segment length moves its child automatically.

@@ -1,0 +1,7 @@
+com/humangl/Renderer.class
+com/humangl/Cube.class
+com/humangl/Humanoid.class
+com/humangl/ShaderProgram.class
+com/humangl/Main.class
+com/humangl/math/Mat4.class
+com/humangl/math/MatrixStack.class

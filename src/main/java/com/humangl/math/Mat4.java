@@ -101,11 +101,16 @@ public final class Mat4 {
         float forwardLength = length(forwardX, forwardY, forwardZ);
         forwardX /= forwardLength; forwardY /= forwardLength; forwardZ /= forwardLength;
 
-        float sideX = forwardZ;
-        float sideY = 0f;
-        float sideZ = -forwardX;
+        float worldUpX = 0f;
+        float worldUpY = 1f;
+        float worldUpZ = 0f;
+
+        float sideX = forwardY * worldUpZ - forwardZ * worldUpY;
+        float sideY = forwardZ * worldUpX - forwardX * worldUpZ;
+        float sideZ = forwardX * worldUpY - forwardY * worldUpX;
         float sideLength = length(sideX, sideY, sideZ);
         sideX /= sideLength; sideY /= sideLength; sideZ /= sideLength;
+
         float upX = sideY * forwardZ - sideZ * forwardY;
         float upY = sideZ * forwardX - sideX * forwardZ;
         float upZ = sideX * forwardY - sideY * forwardX;
