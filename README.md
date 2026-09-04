@@ -22,13 +22,36 @@ Controls: `A`/`S`/`D`/`F` set slow/normal/fast/faster animation speed, `SPACE` t
 
 ### Main Flow
 
-```mermaid
-flowchart LR
-    Input[Input] --> Main[Main]
-    Main --> Renderer[Renderer]
-    Renderer --> Humanoid[Humanoid]
-    Humanoid --> Cube[Cube mesh]
-    Cube --> Screen[Screen]
-```
+                    Humanoid.draw()
+                          │
+                          ▼
+                    MatrixStack
+                 "Where/how to transform?"
+                          │
+                          ▼
+                    Body parts
+              torso / head / arms / legs
+                          │
+                          │  each body part
+                          │  uses a transformation
+                          ▼
+                     Cube.draw()
+                          │
+                          │
+                 Cube geometry
+                 "What vertices?"
+                          │
+                          ▼
+                   ShaderProgram
+                          │
+                          ▼
+                     GPU / OpenGL
+                    /           \
+                   ▼             ▼
+            Vertex Shader   Fragment Shader
+            "Where?"        "What color?"
+                   \             /
+                    ▼           ▼
+                        Screen
 
 The humanoid stays hierarchical under the hood, but the rendering path is intentionally simple: every visible part comes from one cube mesh and is positioned with stacked transforms.

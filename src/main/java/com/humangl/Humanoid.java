@@ -94,16 +94,6 @@ public final class Humanoid {
         drawLeg(1f, rightStep, rightLift, jumpKneeBend, jumpFootTilt, jumpCrouch);
     }
 
-    public void setUpperArmLength(float length) {
-        if (length <= 0f) throw new IllegalArgumentException("Arm length must be positive");
-        upperArmLength = length;
-    }
-
-    public void setUpperLegLength(float length) {
-        if (length <= 0f) throw new IllegalArgumentException("Leg length must be positive");
-        upperLegLength = length;
-    }
-
     private void drawTorso() {
         stack.push();
         stack.translate(0f, 2.75f, 0f);
@@ -114,7 +104,7 @@ public final class Humanoid {
 
     private void drawHead() {
         stack.push();
-        stack.translate(0f, 4.65f, 0f);
+        stack.translate(0f, 4.40f, 0f);
         stack.scale(0.82f, 0.82f, 0.82f);
         drawPart(0.91f, 0.72f, 0.45f);
         stack.pop();
@@ -136,7 +126,7 @@ public final class Humanoid {
         stack.push();
         stack.translate(0f, -upperArmLength * 0.5f, 0f);
         stack.scale(0.42f, upperArmLength, 0.42f);
-        drawPart(0.19f, 0.46f, 0.62f);
+        drawPart(0.91f, 0.72f, 0.45f);
         stack.pop();
     }
 
@@ -145,7 +135,7 @@ public final class Humanoid {
         stack.push();
         stack.translate(0f, -length * 0.5f, 0f);
         stack.scale(0.36f, length, 0.36f);
-        drawPart(0.25f, 0.55f, 0.72f);
+        drawPart(0.91f, 0.72f, 0.45f);
         stack.pop();
     }
 
@@ -175,7 +165,7 @@ public final class Humanoid {
         stack.push();
         stack.translate(0f, -upperLegLength * 0.5f, 0f);
         stack.scale(0.5f, upperLegLength, 0.5f);
-        drawPart(0.19f, 0.46f, 0.62f);
+        drawPart(0.05f, 0.12f, 0.48f);
         stack.pop();
     }
 
@@ -184,7 +174,7 @@ public final class Humanoid {
         stack.push();
         stack.translate(0f, -length * 0.5f, 0f);
         stack.scale(0.42f, length, 0.42f);
-        drawPart(0.25f, 0.55f, 0.72f);
+        drawPart(0.05f, 0.25f, 0.65f);
         stack.pop();
     }
 
