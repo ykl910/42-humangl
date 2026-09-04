@@ -16,4 +16,19 @@ make run
 
 Controls: `A`/`S`/`D`/`F` set slow/normal/fast/faster animation speed, `SPACE` triggers one jump when standing still (jump input is ignored while walking), `R` triggers a torso spin in one direction and `T` in the opposite direction, `E` pauses/resumes, `ESC` quits. The humanoid is animated continuously; speed zero leaves it standing.
 
-The project intentionally keeps the scene small: every body-part method draws exactly one unit cube at the origin of its current matrix. Parent transforms are pushed and popped around the hierarchy, so changing a segment length moves its child automatically.
+## Architecture
+
+`Main` handles input and the frame loop, `Renderer` stores the current camera matrix, and `Humanoid` builds the animated character from a shared cube mesh.
+
+### Main Flow
+
+```mermaid
+flowchart LR
+    Input[Input] --> Main[Main]
+    Main --> Renderer[Renderer]
+    Renderer --> Humanoid[Humanoid]
+    Humanoid --> Cube[Cube mesh]
+    Cube --> Screen[Screen]
+```
+
+The humanoid stays hierarchical under the hood, but the rendering path is intentionally simple: every visible part comes from one cube mesh and is positioned with stacked transforms.

@@ -123,7 +123,7 @@ public final class Humanoid {
     private void drawArm(float side, float swing, float jumpArmRaise) {
         stack.push();
         stack.translate(side * 1.02f, 3.35f, 0f);
-        stack.rotateX(swing * ARM_SWING - jumpArmRaise * 1.2f);
+        stack.rotateX(swing * ARM_SWING - jumpArmRaise * 2.2f);
         drawUpperArm();
         stack.translate(0f, -upperArmLength, 0f);
         stack.rotateX(-positive(-swing) * ELBOW_BEND - jumpArmRaise * 0.55f);
