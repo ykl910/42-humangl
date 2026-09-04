@@ -11,7 +11,6 @@ import org.lwjgl.system.MemoryStack;
 public final class ShaderProgram {
     private final int id;
     private final int mvpLocation;
-    private final int modelLocation;
     private final int colorLocation;
 
     public ShaderProgram(String vertexPath, String fragmentPath) {
@@ -27,7 +26,6 @@ public final class ShaderProgram {
         GL20.glDeleteShader(vertex);
         GL20.glDeleteShader(fragment);
         mvpLocation = GL20.glGetUniformLocation(id, "uMvp");
-        modelLocation = GL20.glGetUniformLocation(id, "uModel");
         colorLocation = GL20.glGetUniformLocation(id, "uColor");
     }
 
@@ -55,7 +53,6 @@ public final class ShaderProgram {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             Mat4 mvp = projectionView.multiply(model);
             GL20.glUniformMatrix4fv(mvpLocation, false, mvp.toBuffer());
-            GL20.glUniformMatrix4fv(modelLocation, false, model.toBuffer());
         }
         GL20.glUniform3f(colorLocation, red, green, blue);
     }
