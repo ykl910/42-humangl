@@ -11,7 +11,9 @@ public final class Humanoid {
     private float torsoSpinDirection;
     private float heightOffset;
     private float upperArmLength = 1.05f;
-    private float upperLegLength = 1.35f;
+    private float forearmLength = 0.9f;
+    private float thighLength = 1.35f;
+    private float lowerLegLength = 1.2f;
     private static final float ARM_SWING = 0.75f;
     private static final float ELBOW_BEND = 0.6f;
     private static final float ARM_PHASE_OFFSET = 0.12f;
@@ -131,10 +133,9 @@ public final class Humanoid {
     }
 
     private void drawForearm() {
-        float length = 0.9f;
         stack.push();
-        stack.translate(0f, -length * 0.5f, 0f);
-        stack.scale(0.36f, length, 0.36f);
+        stack.translate(0f, -forearmLength * 0.5f, 0f);
+        stack.scale(0.36f, forearmLength, 0.36f);
         drawPart(0.91f, 0.72f, 0.45f);
         stack.pop();
     }
@@ -145,10 +146,10 @@ public final class Humanoid {
         stack.translate(side * 0.55f, 1.85f - jumpCrouch * 0.18f, 0f);
         stack.rotateX(step * LEG_SWING - jumpCrouch * 0.75f);
         drawThigh();
-        stack.translate(0f, -upperLegLength, 0f);
+        stack.translate(0f, -thighLength, 0f);
         stack.rotateX(kneeBend);
         drawLowerLeg();
-        stack.translate(0f, -1.2f, 0f);
+        stack.translate(0f, -lowerLegLength, 0f);
         float footAngle = step * FOOT_SWING;
         float footLift = positive(-step) * FOOT_LIFT;
         stack.translate(0f, footLift + jumpCrouch * 0.06f, 0f);
@@ -163,17 +164,16 @@ public final class Humanoid {
 
     private void drawThigh() {
         stack.push();
-        stack.translate(0f, -upperLegLength * 0.5f, 0f);
-        stack.scale(0.5f, upperLegLength, 0.5f);
+        stack.translate(0f, -thighLength * 0.5f, 0f);
+        stack.scale(0.5f, thighLength, 0.5f);
         drawPart(0.05f, 0.12f, 0.48f);
         stack.pop();
     }
 
     private void drawLowerLeg() {
-        float length = 1.2f;
         stack.push();
-        stack.translate(0f, -length * 0.5f, 0f);
-        stack.scale(0.42f, length, 0.42f);
+        stack.translate(0f, -lowerLegLength * 0.5f, 0f);
+        stack.scale(0.42f, lowerLegLength, 0.42f);
         drawPart(0.05f, 0.25f, 0.65f);
         stack.pop();
     }
