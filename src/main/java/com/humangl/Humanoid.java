@@ -67,8 +67,6 @@ public final class Humanoid {
         float armBase = (float) Math.sin(walkPhase + ARM_PHASE_OFFSET);
         float leftStep = gait;
         float rightStep = -gait;
-        float leftLift = positive(leftStep);
-        float rightLift = positive(rightStep);
         if (torsoDirection != 0f && torsoSpinStartTime < 0f) {
             torsoSpinStartTime = time;
             torsoSpinDirection = torsoDirection;
@@ -92,8 +90,8 @@ public final class Humanoid {
         drawHead();
         drawArm(-1f, -armBase, jumpArmRaise);
         drawArm(1f, armBase, jumpArmRaise);
-        drawLeg(-1f, leftStep, leftLift, jumpKneeBend, jumpFootTilt, jumpCrouch);
-        drawLeg(1f, rightStep, rightLift, jumpKneeBend, jumpFootTilt, jumpCrouch);
+        drawLeg(-1f, leftStep, jumpKneeBend, jumpFootTilt, jumpCrouch);
+        drawLeg(1f, rightStep, jumpKneeBend, jumpFootTilt, jumpCrouch);
     }
 
     private void drawTorso() {
@@ -140,7 +138,7 @@ public final class Humanoid {
         stack.pop();
     }
 
-    private void drawLeg(float side, float step, float lift, float jumpKneeBend, float jumpFootTilt, float jumpCrouch) {
+    private void drawLeg(float side, float step, float jumpKneeBend, float jumpFootTilt, float jumpCrouch) {
         float kneeBend = positive(-step) * KNEE_BEND + jumpKneeBend * 0.85f;
         stack.push();
         stack.translate(side * 0.55f, 1.85f - jumpCrouch * 0.18f, 0f);
