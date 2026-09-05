@@ -1,13 +1,17 @@
 MVN ?= mvn
 
-.PHONY: build run clean
+.PHONY: run clean re
 
-build:
-	$(MVN) -q package
+all: run
 
-run:
+run: 
 	$(MVN) -q compile dependency:build-classpath -Dmdep.outputFile=target/classpath.txt
 	java -XstartOnFirstThread -cp "target/classes:$$(cat target/classpath.txt)" com.humangl.Main
 
 clean:
-	$(MVN) clean
+	$(MVN) clean -q
+
+re:
+	$(MVN) clean -q
+	$(MVN) -q compile dependency:build-classpath -Dmdep.outputFile=target/classpath.txt
+	java -XstartOnFirstThread -cp "target/classes:$$(cat target/classpath.txt)" com.humangl.Main
