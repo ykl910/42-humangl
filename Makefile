@@ -7,7 +7,6 @@ RES     := src/main/resources
 OUT     := target
 LIB     := $(OUT)/lib
 
-# uname, Adoptium and LWJGL spell architectures differently: normalise once.
 ARCH := $(shell uname -m | sed 's/x86_64/x64/; s/arm64/aarch64/')
 ifeq ($(shell uname -s),Darwin)
   PLAT := macos
@@ -20,10 +19,9 @@ else
   JVM  :=
   STRIP := 1
 endif
-# LWJGL suffixes the classifier on arm64 only: natives-linux vs natives-linux-arm64.
+
 NATIVES := natives-$(PLAT)$(if $(filter aarch64,$(ARCH)),-arm64)
 
-# A JDK is 200 MB+ and 42's home quota is small, so cache it in goinfre.
 CACHE ?= $(firstword $(wildcard $(HOME)/goinfre) $(HOME)/.cache)/humangl-toolchain
 
 # Reuse the system javac if it is recent enough, else use the cached JDK. The
@@ -38,19 +36,18 @@ else
   NEED_JDK := $(JDK)/bin/javac
 endif
 
-# Each module needs its API jar *and* the matching natives jar.
 JARS := $(foreach m,lwjgl lwjgl-glfw lwjgl-opengl,\
           $(LIB)/$m-$(LWJGL).jar $(LIB)/$m-$(LWJGL)-$(NATIVES).jar)
 SRCS := $(shell find $(SRC) -name '*.java')
 
-SHELL := /bin/bash   # process substitution, used to filter one stderr line below
+SHELL := /bin/bash
 
 # Recipes are silent; `make V=1` echoes the real commands instead.
 Q := $(if $(V),,@)
 
 .DEFAULT_GOAL := run
 .PHONY: run build info clean fclean re
-.DELETE_ON_ERROR:   # never leave a half-downloaded jar looking like a valid one
+.DELETE_ON_ERROR:
 
 run: build
 	$(Q)$(JDK)/bin/java $(JVM) -cp "$(OUT)/classes:$(LIB)/*" $(MAIN) \
@@ -58,8 +55,6 @@ run: build
 
 build: $(OUT)/.built
 
-# javac has no 1-source-1-object mapping, so one stamp guards the whole compile
-# and keeps a second `make` a no-op.
 $(OUT)/.built: $(SRCS) $(JARS) $(NEED_JDK)
 	@echo "  compile $(words $(SRCS)) sources"
 	$(Q)$(JDK)/bin/javac --release $(JDK_VER) -encoding UTF-8 -d $(OUT)/classes -cp "$(LIB)/*" $(SRCS)
