@@ -12,7 +12,7 @@ public final class Humanoid {
     private float heightOffset;
     private float upperArmLength = 1.05f;
     private float forearmLength = 0.9f;
-    private float thighLength = 1.35f;
+    private float thighLength = 13.35f;
     private float lowerLegLength = 1.2f;
     private static final float ARM_SWING = 0.75f;
     private static final float ELBOW_BEND = 0.6f;
